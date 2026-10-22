@@ -1,0 +1,10 @@
+<!doctype html>
+<html lang="vi"><head><%- include('partials/head', { title: selected ? selected.name + ' - Tin mới' : 'Tin mới' }) %></head>
+<body><%- include('partials/header') %>
+<main class="container">
+  <section class="intro"><p class="eyebrow">ĐỀ 19 · CỔNG THÔNG TIN</p><h1>Tin tức mới nhất</h1><p>Cập nhật những câu chuyện đáng chú ý mỗi ngày.</p></section>
+  <nav class="filters" aria-label="Lọc danh mục"><a class="chip <%= selected ? '' : 'active' %>" href="/">Tất cả</a><% categories.forEach(category => { %><a class="chip <%= selected && selected.id === category.id ? 'active' : '' %>" href="/?category=<%= category.id %>"><%= category.name %></a><% }) %></nav>
+  <% if (posts.length) { %><section class="news-grid" aria-label="Danh sách bài viết"><% posts.forEach(post => { %>
+    <article class="news-card"><a class="category-label" href="/?category=<%= categories.find(c => c.slug === post.category_slug)?.id %>"><%= post.category_name %></a><h2><a href="/bai-viet/<%= post.slug %>"><%= post.title %></a></h2><p><%= post.excerpt %></p><div class="meta"><time><%= new Date(post.created_at).toLocaleDateString('vi-VN') %></time><a href="/bai-viet/<%= post.slug %>">Đọc bài <span aria-hidden="true">→</span></a></div></article>
+  <% }) %></section><% } else { %><div class="empty"><h2>Chưa có bài viết trong danh mục này</h2><a href="/">Xem tất cả tin</a></div><% } %>
+</main><%- include('partials/footer') %></body></html>
