@@ -1,0 +1,186 @@
+{
+  "id": null,
+  "uid": "news-portal-overview",
+  "title": "News Portal - Hạ tầng",
+  "tags": [
+    "news-portal",
+    "infrastructure"
+  ],
+  "timezone": "browser",
+  "schemaVersion": 39,
+  "version": 2,
+  "refresh": "30s",
+  "panels": [
+    {
+      "id": 1,
+      "gridPos": {
+        "y": 0,
+        "w": 6,
+        "x": 0,
+        "h": 5
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum(up)"
+        }
+      ],
+      "datasource": {
+        "type": "prometheus",
+        "uid": "news-portal-prometheus"
+      },
+      "type": "stat",
+      "title": "Dịch vụ đang hoạt động"
+    },
+    {
+      "id": 2,
+      "gridPos": {
+        "y": 0,
+        "w": 6,
+        "x": 6,
+        "h": 5
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "mysql_up"
+        }
+      ],
+      "datasource": {
+        "type": "prometheus",
+        "uid": "news-portal-prometheus"
+      },
+      "type": "stat",
+      "title": "MySQL exporter"
+    },
+    {
+      "id": 3,
+      "gridPos": {
+        "y": 0,
+        "w": 6,
+        "x": 12,
+        "h": 5
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "nginx_up"
+        }
+      ],
+      "datasource": {
+        "type": "prometheus",
+        "uid": "news-portal-prometheus"
+      },
+      "type": "stat",
+      "title": "Nginx exporter"
+    },
+    {
+      "id": 4,
+      "gridPos": {
+        "y": 0,
+        "w": 6,
+        "x": 18,
+        "h": 5
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "mysql_global_status_threads_connected"
+        }
+      ],
+      "datasource": {
+        "type": "prometheus",
+        "uid": "news-portal-prometheus"
+      },
+      "type": "stat",
+      "title": "Kết nối MySQL"
+    },
+    {
+      "id": 5,
+      "gridPos": {
+        "y": 5,
+        "w": 12,
+        "x": 0,
+        "h": 8
+      },
+      "targets": [
+        {
+          "legendFormat": "{{job}}",
+          "expr": "up",
+          "refId": "A"
+        }
+      ],
+      "datasource": {
+        "type": "prometheus",
+        "uid": "news-portal-prometheus"
+      },
+      "type": "timeseries",
+      "title": "Tình trạng các dịch vụ"
+    },
+    {
+      "id": 6,
+      "gridPos": {
+        "y": 5,
+        "w": 12,
+        "x": 12,
+        "h": 8
+      },
+      "targets": [
+        {
+          "legendFormat": "{{name}}",
+          "expr": "sum by (name) (rate(container_cpu_usage_seconds_total{name!=\"\",container_label_com_docker_compose_project=\"news-portal\"}[5m]))",
+          "refId": "A"
+        }
+      ],
+      "datasource": {
+        "type": "prometheus",
+        "uid": "news-portal-prometheus"
+      },
+      "type": "timeseries",
+      "title": "CPU container"
+    },
+    {
+      "id": 7,
+      "gridPos": {
+        "y": 13,
+        "w": 12,
+        "x": 0,
+        "h": 8
+      },
+      "targets": [
+        {
+          "legendFormat": "{{name}}",
+          "expr": "sum by (name) (container_memory_working_set_bytes{name!=\"\",container_label_com_docker_compose_project=\"news-portal\"})",
+          "refId": "A"
+        }
+      ],
+      "datasource": {
+        "type": "prometheus",
+        "uid": "news-portal-prometheus"
+      },
+      "type": "timeseries",
+      "title": "Bộ nhớ container"
+    },
+    {
+      "id": 8,
+      "gridPos": {
+        "y": 13,
+        "w": 12,
+        "x": 12,
+        "h": 8
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "{service=\"app\"}"
+        }
+      ],
+      "datasource": {
+        "type": "loki",
+        "uid": "news-portal-loki"
+      },
+      "type": "logs",
+      "title": "Log ứng dụng"
+    }
+  ]
+}
